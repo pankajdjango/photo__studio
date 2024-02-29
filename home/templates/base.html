@@ -1,0 +1,72 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="icon" href="../static/image/fav.png" type="image/png" sizes="16x16">
+    <title> {% block title %}{% endblock title %} | Photo Studio</title>
+    {% comment %}
+    <link rel="stylesheet" href="../static/base.css"> {% endcomment %}
+</head>
+
+<body>
+<!--	<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #11009B ;">-->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Photo Studio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="photoshoot">Photo Shoot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery">Galleries</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light" href="booknow">Book Now</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="btn btn-outline-light mx-2" href="/admin">Login Admin</a>
+                    </li> -->
+		    {%if request.session.username %}
+		      <li class="nav-item">
+		       <p class="text-light">Welcome : {{request.session.username}}</p>
+		      <li/>
+			<li>
+				<a href="logout" class="warning">Logout</a>
+			</li>
+		    {% endif %}
+                </ul>
+                <form class="d-flex">
+
+                    <a class="btn btn-outline-light" href="mailto:pankaj.pv70@gmail.com">Contact Us</a>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    {% block body %}{% endblock body %}
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js" integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+{% block js %}{% endblock js %}
+
+
+</html>

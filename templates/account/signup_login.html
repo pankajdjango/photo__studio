@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock title %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}" />
+{% endblock head %}
+{% block body %}
+
+<section class="wrapper">
+      <div class="form signup">
+        <header>Signup</header>
+        <form action="" method="post" enctype="multipart/form-data">
+          <p class="signup_error">{{signup_error}}</p>
+          {% csrf_token %}
+          <input type="text" name="full_name" placeholder="Full name" minlength="3" maxlength="50" oninput="this.value = this.value.replace(/^[^\S\r\n]+|[^\S\r\n]{2,}|[^a-zA-Z\s]+/g, '').replace(/\s{2,}/g, ' ')" required/>
+          <input type="email" name="email" placeholder="Email address" required minlength="6" maxlength="100"/>
+          <input type="mobile" placeholder="Mobile Number" name="mobile" minlength="10" maxlength="10" required oninput="if(this.value.length>0 && !['6', '7', '8', '9'].includes(this.value.charAt(0))) {this.value = this.value.substring(1);} this.value = this.value.replace(/\D/g, ''); this.value = this.value.substring(0, 10);">
+          <input type="password" name="password" placeholder="Password" required minlength="4" maxlength="50"/>
+          <select id="city_id" name="city_id" required class="form-control"> </select>
+          <div class="checkbox">
+            <input type="checkbox" id="signupCheck" required/>
+            <label for="signupCheck">I accept all terms & conditions</label>
+          </div>
+          <input type="submit" value="Signup" />
+        </form>
+      </div>
+
+      <div class="form login">
+        <header>Login</header>
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="email" name="email" placeholder="Email address" required minlength="6" maxlength="100"/>
+          <input type="password" name="password" placeholder="Password" required minlength="4" maxlength="50"/>
+          <a href="#">Forgot password?</a>
+          <small class="login_error">{{login_error}}</small>
+          <input type="submit" name="login" value="Login" />
+        </form>
+      </div>
+    </section>
+{% endblock body %}
+
+{% block js %}
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('.signup_error').hide();
+      $('.login_error').hide();
+      setTimeout(function() {$('.login_error').hide();}, 5000); // Hide after 5 seconds
+      setTimeout(function() {$('.signup_error').hide();}, 5000);
+
+      const wrapper = document.querySelector(".wrapper"),
+      signupHeader = document.querySelector(".signup header"),
+      loginHeader = document.querySelector(".login header");
+      loginHeader.addEventListener("click", () => {wrapper.classList.add("active");});
+      signupHeader.addEventListener("click", () => {wrapper.classList.remove("active");});
+
+      if ("{{signup_error}}".length > 0) {$('.signup_error').show();}
+      if ("{{login_error}}".length > 0) {$('.login_error').show();}
+      if ("{{login}}".length > 0) {document.querySelector(".login header").click();}
+      if ("{{signup_succes}}".length > 0) {alert("{{signup_succes}}");}
+
+    $('#city_id').select2({
+      placeholder: 'Enter City...',
+      minimumInputLength: 3,
+      ajax: {
+          url: '/restapi/country_state_city_list/',
+          dataType: 'json',
+          quietMillis: 20,
+          data: function (term, page) {return {city: term};},
+          processResults: function (data) {
+              return {
+                  results: data.map(function (item) {
+                      return {
+                          id: item.city_id,
+                          text: `${item.city}, ${item.state__state}, ${item.state__country_code__name}`
+                      };
+                  })
+              };
+          },
+          cache: true
+      }
+      });
+  });
+</script>
+{% endblock js %}
