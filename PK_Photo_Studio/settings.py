@@ -13,18 +13,15 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os,sys
 
-#is_production = 1 if 'PRODUCTION_ENV' in os.environ['PATH'] else 0
-#d = os.environ.get('VIRTUAL_ENV',0)
 is_production = 1 if '/var/run/apache2' in f"{os.environ.get('APACHE_RUN_DIR')}" else 0
-print(f"####is_production{is_production}#########################################################################################",os.environ.get('APACHE_RUN_DIR',0))
-#is_production =  os.environ.get('PRODUCTION_ENV') 
+
 if bool(is_production):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
     ALLOWED_HOSTS = ["5.181.217.57","photostudio.pankajtrsrewa.com"]
 else :
     BASE_DIR = Path(__file__).resolve().parent
-    sys.path.append('/home/pankaj/study/cicd')
+    sys.path.append('/home/pankaj/study/cicd/config')
     ALLOWED_HOSTS = ['*']
 
 # Set DEBUG mode based on the environment
@@ -32,9 +29,7 @@ DEBUG = not is_production
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-
 from config import DATABASE_CONFIG, SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -89,7 +84,6 @@ WSGI_APPLICATION = 'PK_Photo_Studio.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 import psycopg2.extensions
-
 if not is_production:
     DATABASES = {
         'default': {
