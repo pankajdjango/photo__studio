@@ -9,27 +9,52 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+#
+#from pathlib import Path
+#
+## Build paths inside the project like this: BASE_DIR / 'subdir'.
+#BASE_DIR = Path(__file__).resolve().parent.parent
+#import os
+#
+#is_production = None
+#if bool(os.environ.get('PRODUCTION_ENV',0)):
+#    is_production = 1
+#else:
+#    is_production = 0
+#
+#import sys
+#if bool(is_production):
+#    ALLOWED_HOSTS = ["5.181.217.57",'pankajtrsrewa.com','http://www.pankajtrsrewa.com/','www.pankajtrsrewa.com']
+#    DEBUG = False
+#    sys.path.append('/home/django-server')
+#else :
+#    sys.path.append('/home/pankaj/study/cicd')
+#    ALLOWED_HOSTS = ['*']
+#    DEBUG=True
 from pathlib import Path
-import os,sys
+import os
+import sys
 
-#is_production = 1 if 'PRODUCTION_ENV' in os.environ['PATH'] else 0
-#d = os.environ.get('VIRTUAL_ENV',0)
-is_production = 1 if '/var/run/apache2' in f"{os.environ.get('APACHE_RUN_DIR')}" else 0
-print(f"####is_production{is_production}#########################################################################################",os.environ.get('APACHE_RUN_DIR',0))
-#is_production =  os.environ.get('PRODUCTION_ENV') 
-if bool(is_production):
-    # Build paths inside the project like this: BASE_DIR / 'subdir'.
-    BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-    ALLOWED_HOSTS = ["5.181.217.57","photostudio.pankajtrsrewa.com"]
-else :
-    BASE_DIR = Path(__file__).resolve().parent
-    sys.path.append('/home/pankaj/study/cicd')
-    ALLOWED_HOSTS = ['*']
+# Determine if the production environment is set
+is_production = bool(os.environ.get('PRODUCTION_ENV', False))
 
 # Set DEBUG mode based on the environment
 DEBUG = not is_production
 
+# Set ALLOWED_HOSTS based on the environment
+if is_production:
+    ALLOWED_HOSTS = ["5.181.217.57", 'pankajtrsrewa.com', 'www.pankajtrsrewa.com']
+    BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+    sys.path.append(BASE_DIR.parent.parent.as_posix())  # Assuming the parent directory contains the Django project
+else:
+    ALLOWED_HOSTS = ['*']
+    BASE_DIR = Path(__file__).resolve().parent
+
+# Add the project directory to the Python path
+sys.path.append(BASE_DIR.as_posix())
+
+
+print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ",is_production,DEBUG)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -60,7 +85,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'home.midddleware.Custom404Middleware',
 ]
 
 ROOT_URLCONF = 'PK_Photo_Studio.urls'
@@ -102,7 +126,7 @@ if not is_production:
             'OPTIONS': {
                     'client_encoding' : 'UTF8',
                     #'timezone:' : 'Asia/Kolkata',
-                    'isolation_level':psycopg2.extensions.ISOLATION_LEVEL_DEFAULT,
+                    # 'isolation_level':psycopg2.extensions.ISOLATION_LEVEL_DEFAULT,
             }
         },
     }
@@ -118,7 +142,7 @@ else:
             'OPTIONS': {
                     'client_encoding' : 'UTF8',
                     #'timezone:' : 'Asia/Kolkata',
-                    #'isolation_level':psycopg2.extensions.ISOLATION_LEVEL_DEFAULT,
+                    'isolation_level':psycopg2.extensions.ISOLATION_LEVEL_DEFAULT,
             }
         },
     }
@@ -152,9 +176,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 #custome settings
-BASE_DIR = Path(__file__).resolve().parent.parent
-STATIC_DIR = BASE_DIR / 'static'
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [STATIC_DIR,]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'),]
 TIME_ZONE = 'Asia/Kolkata'

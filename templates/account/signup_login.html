@@ -52,10 +52,11 @@
       loginHeader = document.querySelector(".login header");
       loginHeader.addEventListener("click", () => {wrapper.classList.add("active");});
       signupHeader.addEventListener("click", () => {wrapper.classList.remove("active");});
+      document.querySelector(".login header").click();
 
       if ("{{signup_error}}".length > 0) {$('.signup_error').show();}
       if ("{{login_error}}".length > 0) {$('.login_error').show();}
-      if ("{{login}}".length > 0) {document.querySelector(".login header").click();}
+      //if ("{{login}}".length > 0) {document.querySelector(".login header").click();}
       if ("{{signup_succes}}".length > 0) {alert("{{signup_succes}}");}
 
     $('#city_id').select2({

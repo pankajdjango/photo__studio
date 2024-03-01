@@ -31,14 +31,16 @@ def signup_login(request):
                 context["login"]=True
             except Exception as e:
                 context["signup_error"]="Something went wrong! Please try again."
+    print(f"################################## {'account/signup_login.html'}")
     return render(request,"account/signup_login.html",context)
 
 
 # View to handle user logout
 def logout(request):
     # Logic to log out user
+    request.session.clear()
     # Redirect to home page or login page
-    return redirect('home')
+    return redirect('/')
 
 
 
