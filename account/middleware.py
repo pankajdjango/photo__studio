@@ -1,16 +1,24 @@
-# In your_app/middleware.py
-
-from datetime import datetime
+from django.shortcuts import render
 from django.utils.deprecation import MiddlewareMixin
-from .models import Log  # Import your Log model
+from ps_webapp.models import UrlHistory,AccountProfile
 
-class LogMiddleware(MiddlewareMixin):
+class Custom404Middleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        if response.status_code == 404:
+            return render(request, '404.html', status=404)
+        return response
+
+
+class URLHistoryMiddleware(MiddlewareMixin):
     def process_request(self, request):
-        # Log the request details
-        Log.objects.create(
-            url=request.path,
-            method=request.method,
-            user=request.user if request.user.is_authenticated else None,
-            timestamp=datetime.now()
-        )
+        userid=request.session.get("userid")
+        if userid:
+            user = AccountProfile.objects.get(userid=userid)
+            url_visited = request.path
+            if not url_visited.startswith('/restapi'):
+                UrlHistory.objects.create(userid=user, url_visited=url_visited)
         return None

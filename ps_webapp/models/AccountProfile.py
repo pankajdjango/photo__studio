@@ -22,8 +22,9 @@ class AccountProfile(models.Model):
     pincode = models.IntegerField(blank=True, null=True)
     active = models.BooleanField(default=True)
     profile_photo = models.CharField(max_length=100, blank=True, null=True)
-    def __str__(self):
-        return self.full_name
     class Meta:
         managed = False
         db_table = '"general"."account_profile"'
+        
+    def __str__(self):
+        return self.full_name

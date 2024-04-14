@@ -9,11 +9,15 @@
 # from .models import Payment
 # from .models import Review
 # from .models import Notification
-# from .AccountProfile         import  AccountProfile
+from .AccountProfile         import  AccountProfile
 from .AreaMaster             import AreaMaster
 from .CityMaster             import CityMaster
 from .CountryMaster          import CountryMaster
 from .CountryStates          import CountryStates
 from .PincodeMaster          import PincodeMaster
 from .ServiceProviderProfile import ServiceProviderProfile
-from .UserProfile            import UserProfile
+# from .UserProfile            import UserProfile
+from .UrlHistory            import UrlHistory
+from .EventStatus            import EventStatus
+from .EventType            import EventType
+from .EventBookingMaster            import EventBookingMaster

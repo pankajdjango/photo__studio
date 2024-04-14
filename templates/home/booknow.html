@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Booknow{% endblock title %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'css/booknow.css' %}" />
+{% include 'navbar.html' %}
+  <div class="container my-4">
+    <h3 class="title">Booking Details</h3>
+    <form action="" method="POST" Required>
+      {% csrf_token %}
+      <div class="user-details">
+        <div class="input-box"><span class="details">City</span>
+            <select id="city_id" name="city_id" required class="form-control"> </select>
+        </div>
+        <div class="input-box"><span class="details">Area Address</span>
+            <div class="input"><input name="area_address" type="text" minLength="5" maxLength="100" required></div>
+        </div>
+        <div class="input-box"><span class="details">Mobile Number</span>
+          <input name="mobile" type="text"
+  oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\+)\+/g, '+');
+  if (!/^[6-9]/.test(this.value)) this.value = '';"
+  minLength="10" maxLength="10" required>
+        </div>
+        <div class="input-box"><span class="details">Message</span>
+            <div class="input">
+              <input name="message" type="text" maxLength="100" required>
+            </div>
+        </div>
+        <div class="input-box"><span class="details">Event type</span>
+            <div class="input">
+                <select name="event_id" required>
+                    {% for op in event_type %}
+                    <option value="{{op.event_id}}">{{op.event_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="input-box"><span class="details">Event date</span>
+            <div class="input"><input name="event_date" id="myDatetime" type="datetime-local" required></div>
+        </div>
+      </div>
+      <!-- <div class="user-details">
+        <div class="input-box"><span class="details">Full name</span>
+            <div class="input"><input name="full_name" type="text" oninput="this.value = this.value.replace(/^\s/, '').replace(/[^a-zA-Z ]/g, '').replace(/  /g,' ');" minLength="5" maxLength="30" required></div>
+        </div>
+        <div class="input-box"><span class="details">Address</span>
+            <div class="input"><input name="address" type="text" minLength="5" maxLength="100" required></div>
+        </div>
+        <div class="input-box"><span class="details">Contact</span>
+            <div class="input"><input name="contact" type="text" oninput="this.value = this.value.replace(/[^0-9+]/g, '').replace(/(\+)\+/g, '+');" minLength="10" maxLength="13" required></div>
+        </div>
+        <div class="input-box"><span class="details">Email</span>
+            <div class="input"><input name="email" type="email" maxLength="60" oninput="this.value = this.value.replace(/ /g, '')" required></div>
+        </div>
+        <div class="input-box"><span class="details">Event type</span>
+            <div class="input">
+                <select name="event_type" required>
+                    {% for op in event_type %}
+                    <option value="{{op.event_id}}">{{op.event_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="input-box"><span class="details">Event date</span>
+            <div class="input"><input name="event_date" id="myDatetime" type="datetime-local" required></div>
+        </div>
+      </div> -->
+      <div class="button">
+        <input type="submit" value="Book Now">
+      </div>
+    </form>
+  </div>
+{% endblock body %}
+{% block js %}
+<script>
+  $(document).ready(function() {
+  var input = document.getElementById("myDatetime");
+  var currentDate = new Date();
+  // Set the minimum value of the input to the next day
+  currentDate.setDate(currentDate.getDate() + 1);
+  var minDate = currentDate.toISOString().slice(0, 16); // Get date and time in the format of YYYY-MM-DDTHH:MM
+  // Set the minimum attribute of the input
+  input.setAttribute("min", minDate);
+
+
+
+  $('#city_id').select2({
+    placeholder: 'Enter City...',
+    minimumInputLength: 3,
+    ajax: {
+        url: '/restapi/country_state_city_list/',
+        dataType: 'json',
+        quietMillis: 20,
+        data: function (term, page) {return {city: term};},
+        processResults: function (data) {
+            return {
+                results: data.map(function (item) {
+                    return {
+                        id: item.city_id,
+                        text: `${item.city}, ${item.state__state}, ${item.state__country_code__name}`
+                    };
+                })
+            };
+        },
+        cache: true
+    }
+    });
+    });
+</script>
+{% endblock js %}

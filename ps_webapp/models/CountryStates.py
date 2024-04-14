@@ -1,4 +1,6 @@
 from django.db import models
+
+
 class CountryStates(models.Model):
     state_id = models.AutoField(primary_key=True)
     state = models.CharField(max_length=80, unique=True)  # Ensure uniqueness

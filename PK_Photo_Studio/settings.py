@@ -22,7 +22,7 @@ if bool(is_production):
 else :
     BASE_DIR = Path(__file__).resolve().parent
     sys.path.append('/home/pankaj/study/cicd/config')
-    ALLOWED_HOSTS = ['*']
+    ALLOWED_HOSTS = ['localhost','127.0.0.1']
 
 # Set DEBUG mode based on the environment
 DEBUG = not is_production
@@ -55,7 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'home.midddleware.Custom404Middleware',
+    'account.middleware.Custom404Middleware',
+    'account.middleware.URLHistoryMiddleware',
 ]
 
 ROOT_URLCONF = 'PK_Photo_Studio.urls'
@@ -96,7 +97,7 @@ if not is_production:
             'OPTIONS': {
                     'client_encoding' : 'UTF8',
                     #'timezone:' : 'Asia/Kolkata',
-                    'isolation_level':psycopg2.extensions.ISOLATION_LEVEL_DEFAULT,
+                    # 'isolation_level':psycopg2.extensions.ISOLATION_LEVEL_DEFAULT,
             }
         },
     }

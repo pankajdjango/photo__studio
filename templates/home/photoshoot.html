@@ -1,0 +1,71 @@
+{% extends 'base.html' %} {% block title %}Galleries{% endblock title %}
+{% block body %}
+{% include 'navbar.html' %}
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="../static/image/model.jpg" class="d-block w-100" alt="...">
+                    <div class="card-body">
+                        <p class="text-center">
+                            MODEL PHOTOGRAPHY
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="../static/image/portrait.jpg" class="d-block w-100" alt="...">
+                    <div class="card-body">
+                        <p class="text-center">
+                            POTRAIT PHOTOGRAPHY
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="../static/image/child1.jpg" class="d-block w-100" alt="...">
+                    <div class="card-body">
+                        <p class="text-center">
+                            CHILD MODELLING PHOTOGRAPHY
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="../static/image/wedding.jpg" class="d-block w-100" alt="..." ;>
+                    <div class="card-body">
+                        <p class="text-center">
+                            WEDDING PROGRAM PHOTOGRAPHY
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="../static/image/mature_age.jpg" class="d-block w-100" alt="...">
+                    <div class="card-body">
+                        <p class="text-center">
+                            MATURE AGE MODELLING PHOTOGRAPHY
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="../static/image/fitness.jpg" class="d-block w-100" alt="...">
+                    <div class="card-body">
+                        <p class="text-center">
+                            FITNESS MODELLING PHOTOGRAPHY
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
