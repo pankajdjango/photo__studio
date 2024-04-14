@@ -18,7 +18,7 @@ is_production = 1 if '/var/run/apache2' in f"{os.environ.get('APACHE_RUN_DIR')}"
 if bool(is_production):
     # Build paths inside the project like this: BASE_DIR / 'subdir'.
     BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-    ALLOWED_HOSTS = ["5.181.217.57","photostudio.pankajtrsrewa.com"]
+    ALLOWED_HOSTS = ["5.181.217.57","pankajtrsrewa.com","https://www.pankajtrsrewa.com/","www.pankajtrsrewa.com"]
 else :
     BASE_DIR = Path(__file__).resolve().parent
     sys.path.append('/home/pankaj/study/cicd/config')
