@@ -1,65 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Booknow{% endblock title %}
+{% block title %}Booking Stats{% endblock title %}
 {% block body %}
 {% load custom_filter %}
 {% include 'navbar.html' %}
-<style media="screen">
-  .Pending{
-    padding: 8px 16px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: #d29e01;
-    background-color: transparent;
-  }
-  .Confirm{
-    padding: 8px 16px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: #75d201;
-    background-color: transparent;
-  }
-  .Confirm{
-
-  .Rejected{
-    padding: 8px 16px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: #d20101;
-    background-color: transparent;
-  }
-  .Cancel{
-    padding: 8px 16px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    color: #d20101bd;
-    background-color: transparent;
-  }
-
-
-</style>
+<link rel="stylesheet" href="{% static 'css/booking_stats.css' %}" />
 <h1 class="text-center" style="color: #0d225c; margin-bottom: 35px;">Booking Stats</h1>
 <form class="" action="" method="GET">
     <div class="row">
             <div class="col-sm-3">
-                <lable>From Date</lable>
-                <input name="from_date" id="from_date" type="date" class="form-control" onkeydown="return true" onchange="return date_val();"  value="{{from_date}}" required>
+              <lable>From Date</lable>
+              <input name="from_date" id="from_date" type="date" class="form-control" onkeydown="return true" value="{{from_date}}" required>
             </div>
             <div class="col-sm-3">
               <lable>To Date</lable>
-                <input name="to_date" id="to_date" type="date" class="form-control" onkeydown="return true" onchange="return date_val();" value="{{to_date}}" required>
+              <input name="to_date" id="to_date" type="date" class="form-control" onkeydown="return true" value="{{to_date}}" required>
             </div>
             <div class="col-sm-3"><br>
-                <input  type="submit" value="Submit" class="btn btn-primary">
-                <input  type="submit" value="Download" name="download" class="btn btn-success" style="margin-left:2px;">
+                <input  type="submit" value="Search" class="btn btn-primary">
             </div>
     </div>
 </form>
@@ -100,32 +58,3 @@
 </div>
 
 {% endblock body %}
-
-{% block js %}
-<script type="text/javascript">
-  function date_val() {
-      var from_date = $('#from_date').val();
-      var to_date = $('#to_date').val();
-      console.log(`from_date ${from_date} to_date ${to_date}`);
-      if (from_date && to_date) {
-          var startDate = new Date(from_date);
-          var endDate = new Date(to_date);
-          if (startDate > endDate) {
-              alert('End Date must be greater than Start Date.');
-              $('#to_date').val(null);
-              return;
-          }
-
-          var today = new Date();
-          today.setHours(23, 59, 59);
-
-          if (startDate > today || endDate > today) {
-              alert('Please do not select a future date.');
-              $('#from_date').val(null);
-              $('#to_date').val(null);
-              return;
-          }
-      }
-  }
-</script>
-{% endblock js %}

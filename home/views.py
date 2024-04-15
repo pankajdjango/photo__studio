@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from account.authenticate import login_required
 from django.http import HttpResponse
 from ps_webapp.models import EventStatus, EventType, EventBookingMaster, AccountProfile
-from datetime import datetime
+from datetime import datetime,timedelta
 from django.utils import timezone
 from django.contrib import messages
 
@@ -55,8 +55,17 @@ def gallery(request):
 
 @login_required
 def booking_stats(request):
-    context = dict()
+    context,filter_clause = dict(),dict()
     userid = request.session['userid']
-    context["booking_stats"] = EventBookingMaster.objects.filter(user_id=userid)
+    from_date = request.GET.get("from_date","")
+    to_date = request.GET.get("to_date","")
 
+    filter_clause["user_id"]=userid
+    if from_date and to_date:
+        context.update({"from_date":from_date,"to_date":to_date})
+        from_date = datetime.strptime(from_date, '%Y-%m-%d')
+        to_date = datetime.strptime(to_date, '%Y-%m-%d') + timedelta(days=1) - timedelta(seconds=1)
+        filter_clause.update({"event_date__range":(from_date, to_date)})
+
+    context["booking_stats"] = EventBookingMaster.objects.filter(**filter_clause)
     return render(request, 'home/booking_stats.html',context)

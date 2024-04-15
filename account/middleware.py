@@ -18,18 +18,8 @@ class URLHistoryMiddleware(MiddlewareMixin):
         userid=request.session.get("userid")
         if userid:
             user = AccountProfile.objects.get(userid=userid)
-            url_visited = request.path
-            if not url_visited.startswith('/restapi'):
-                UrlHistory.objects.create(userid=user, url_visited=url_visited)
+            # url_visited = request.path
+            full_url = request.build_absolute_uri()
+            if '/restapi' not in full_url or '/admin' not in full_url:
+                UrlHistory.objects.create(userid=user, url_visited=full_url)
         return None
-    
-
-from django.utils.deprecation import MiddlewareMixin
-
-class SafariCsrfMiddleware(MiddlewareMixin):
-    def process_response(self, request, response):
-        # Set the CSRF token cookie's SameSite attribute to 'None' for Safari
-        if 'csrftoken' in request.COOKIES and 'Set-Cookie' in response:
-            response['Set-Cookie'] = response['Set-Cookie'].replace('; SameSite=Lax', '')
-        return response
-
