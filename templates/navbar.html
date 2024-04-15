@@ -9,9 +9,6 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/photoshoot">Photo Shoot</a>
                 </li>
                 <li class="nav-item">
@@ -21,24 +18,19 @@
                     <a class="nav-link" href="/about">About</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/booking_stats/">Booking Stats</a>
+                </li>
+                <li class="nav-item">
                     <a class="btn btn-outline-light" href="/booknow">Book Now</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="btn btn-outline-light mx-2" href="/admin">Login Admin</a>
-                </li> -->
-
             </ul>
-            
-            <form class="d-flex">
+
+            <div class="d-flex">
                 <a class="btn btn-outline-light m-lg-1 mb-2" href="mailto:pankaj.pv70@gmail.com">Contact Us</a>
-            </form>
+            </div>
             {%if request.session.username %}
-              <!-- <li class="nav-item"> -->
               <a href="/account/logout" class="btn btn-outline-warning">Logout</a>
-               <p class="text-light m-3 ">Welcome : {{request.session.username}}</p>
-              <!-- <li/> -->
-              <!-- <li> -->
-              <!-- </li> -->
+              <p class="text-light m-3 ">Welcome : {{request.session.username}}</p>
             {% endif %}
         </div>
     </div>

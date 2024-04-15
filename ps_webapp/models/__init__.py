@@ -15,7 +15,7 @@ from .CityMaster             import CityMaster
 from .CountryMaster          import CountryMaster
 from .CountryStates          import CountryStates
 from .PincodeMaster          import PincodeMaster
-from .ServiceProviderProfile import ServiceProviderProfile
+# from .ServiceProviderProfile import ServiceProviderProfile
 # from .UserProfile            import UserProfile
 from .UrlHistory            import UrlHistory
 from .EventStatus            import EventStatus

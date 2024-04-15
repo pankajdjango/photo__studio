@@ -38,14 +38,25 @@ def booknow(request):
     return render(request, 'home/booknow.html',context)
 
 
+@login_required
 def about(request):
     context = dict()
     return render(request, 'home/about.html',context)
 
+@login_required
 def photoshoot(request):
     context = dict()
     return render(request, 'home/photoshoot.html',context)
 
+@login_required
 def gallery(request):
     context = dict()
     return render(request, 'home/gallery.html',context)
+
+@login_required
+def booking_stats(request):
+    context = dict()
+    userid = request.session['userid']
+    context["booking_stats"] = EventBookingMaster.objects.filter(user_id=userid)
+
+    return render(request, 'home/booking_stats.html',context)

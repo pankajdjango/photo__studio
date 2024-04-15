@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Booknow{% endblock title %}
+{% block body %}
+{% load custom_filter %}
+{% include 'navbar.html' %}
+<style media="screen">
+  .Pending{
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #d29e01;
+    background-color: transparent;
+  }
+  .Confirm{
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #75d201;
+    background-color: transparent;
+  }
+  .Confirm{
+
+  .Rejected{
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #d20101;
+    background-color: transparent;
+  }
+  .Cancel{
+    padding: 8px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #d20101bd;
+    background-color: transparent;
+  }
+
+
+</style>
+<h1 class="text-center" style="color: #0d225c; margin-bottom: 35px;">Booking Stats</h1>
+<form class="" action="" method="GET">
+    <div class="row">
+            <div class="col-sm-3">
+                <lable>From Date</lable>
+                <input name="from_date" id="from_date" type="date" class="form-control" onkeydown="return true" onchange="return date_val();"  value="{{from_date}}" required>
+            </div>
+            <div class="col-sm-3">
+              <lable>To Date</lable>
+                <input name="to_date" id="to_date" type="date" class="form-control" onkeydown="return true" onchange="return date_val();" value="{{to_date}}" required>
+            </div>
+            <div class="col-sm-3"><br>
+                <input  type="submit" value="Submit" class="btn btn-primary">
+                <input  type="submit" value="Download" name="download" class="btn btn-success" style="margin-left:2px;">
+            </div>
+    </div>
+</form>
+<br>
+<div class="table-responsive">
+  <table class="table table-hover table-responsive">
+    <thead class="" style="background:#d5adff99;">
+        <tr>
+          <th>S No.</th>
+          <th>Username</th>
+          <th>Event</th>
+          <th>City</th>
+          <th>Area Address</th>
+          <th>Mobile</th>
+          <th>Event Date</th>
+          <th>Message</th>
+          <th>Status</th>
+          <th>Confirmed</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for obj in booking_stats %}
+      <tr>
+        <td>{{forloop.counter}}.</td>
+        <td>{{obj.user}}</td>
+        <td>{{obj.event.event_name}}</td>
+        <td>{{obj.city_id|city_name}}</td>
+        <td>{{obj.area_address}}</td>
+        <td>{{obj.mobile}}</td>
+        <td>{{obj.event_date|timestamp}}</td>
+        <td>{{obj.message}}</td>
+        <td class="{{obj.status.status}}">{{obj.status.status}}</td>
+        <td>{{obj.is_confirmed}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock body %}
+
+{% block js %}
+<script type="text/javascript">
+  function date_val() {
+      var from_date = $('#from_date').val();
+      var to_date = $('#to_date').val();
+      console.log(`from_date ${from_date} to_date ${to_date}`);
+      if (from_date && to_date) {
+          var startDate = new Date(from_date);
+          var endDate = new Date(to_date);
+          if (startDate > endDate) {
+              alert('End Date must be greater than Start Date.');
+              $('#to_date').val(null);
+              return;
+          }
+
+          var today = new Date();
+          today.setHours(23, 59, 59);
+
+          if (startDate > today || endDate > today) {
+              alert('Please do not select a future date.');
+              $('#from_date').val(null);
+              $('#to_date').val(null);
+              return;
+          }
+      }
+  }
+</script>
+{% endblock js %}
