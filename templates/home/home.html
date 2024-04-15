@@ -3,7 +3,6 @@
 {% block title %}Home{% endblock title %}
 {% block body %}
 {% include 'navbar.html' %}
-{% for message in messages %}
 <style>
 img{
     width:100%;
@@ -18,15 +17,16 @@ img{
     border-radius: 50%;
 } */
 </style>
-<div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-    <strong>Thanks for contact me !</strong> {{message}}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+
+{% for msg in message %}
+  {% if message %}
+    <div class="alert text-center alert-{% if msg.level == 25 %}success{% else %}warning{%endif%} alert-dismissible fade show" role="alert">
+        {{ msg.message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
 {% endfor %}
 <div class="container-fluid px-0">
-	{%if birthday %}
-	{% include 'birthday.html' %}
-	{%endif%}
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -59,49 +59,11 @@ img{
             </button>
         </div>
     </div>
-<!-- Button trigger modal -->
-<button type="button" id="btn-click" class="d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
-
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-primary" id="exampleModalLabel">Welcome .......</h5>
-      </div>
-      <div class="modal-body">
-	      <form action="/" method="POST">
-		      {% csrf_token %}
-		      <div class="mb-3">
-			      <label for="full_name" class="form-label text-info">Full Name</label>
-			      <input type="text" name="full_name" maxlength="30" class="form-control" required>
-		      </div>
-		      <div class="mb-3">
-			      <label for="email" class="form-label text-info">Email</label>
-			      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email" required>
-			      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-		      </div>
-		      <div class="modal-footer">
-			      <button type="submit" class="btn btn-primary">Submit</button>
-		      </div>
-	      </form>
-      </div>
-    </div>
-  </div>
-</div>
 {% endblock body %}
 {% block js %}
 <script>
-//	alert("{{birthday}}");
-//	alert("{{request.session.username}}");
-//	if ("{{request.session.username}}"=="None"){
-//		alert("if condition");
-//	$('#btn-click').click();
-//	}else{
-//	alert("else condtion");
-//	}
-
+  setTimeout(function() {
+       $(".alert").alert('close');
+     }, 1000*15);
 </script>
 {% endblock %}
