@@ -125,6 +125,7 @@ CREATE TABLE IF NOT EXISTS general.user_roles (
     userid INTEGER REFERENCES general.account_profile(userid),
     generated INTEGER
 );
---DROP TRIGGER IF EXISTS set_generated_trigger_account_profile ON general.account_profile;
+-- DROP TRIGGER IF EXISTS set_generated_trigger_event_booking_master ON general.event_booking_master;
+-- DROP FUNCTION IF EXISTS set_generated_column_event_booking_master() CASCADE;
 CREATE TRIGGER set_generated_trigger_role_master BEFORE INSERT ON general.role_master FOR EACH ROW EXECUTE FUNCTION set_generated_column();
 CREATE TRIGGER set_generated_trigger_account_profile BEFORE INSERT ON general.user_roles FOR EACH ROW EXECUTE FUNCTION set_generated_column();
