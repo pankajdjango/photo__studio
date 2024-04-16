@@ -20,6 +20,6 @@ class URLHistoryMiddleware(MiddlewareMixin):
             user = AccountProfile.objects.get(userid=userid)
             # url_visited = request.path
             full_url = request.build_absolute_uri()
-            if '/restapi' not in full_url or '/admin' not in full_url:
+            if '/restapi' not in full_url and '/admin' not in full_url:
                 UrlHistory.objects.create(userid=user, url_visited=full_url)
         return None
