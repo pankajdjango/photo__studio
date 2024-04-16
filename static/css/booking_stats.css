@@ -1,38 +1,33 @@
-.Pending{
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  color: #d29e01;
-  background-color: transparent;
-}
-.Confirm{
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
-  color: #75d201;
-  background-color: transparent;
-}
-.Confirm{
 
-.Rejected{
+.booking-status {
   padding: 8px 16px;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
   text-decoration: none;
-  color: #d20101;
   background-color: transparent;
 }
-.Cancel{
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  text-decoration: none;
+
+.Pending {
+  color: #d29e01;
+}
+
+.Confirm {
+  color: #75d201;
+}
+
+.Rejected {
+  color: #d20101;
+}
+
+.Cancel {
   color: #d20101bd;
-  background-color: transparent;
+}
+
+.select2-selection--single{
+  height: 37px !important;
+}
+.select2-selection__rendered{
+line-height: 34px !important;
+text-align:center;
 }

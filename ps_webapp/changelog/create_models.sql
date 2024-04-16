@@ -75,3 +75,17 @@ CREATE TABLE IF NOT EXISTS general.client (
     user_id BIGINT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES account_customuser(id) DEFERRABLE INITIALLY DEFERRED
 );
+
+CREATE TABLE IF NOT EXISTS general.role_master (
+    role_id SERIAL PRIMARY KEY,
+    role_name VARCHAR(50),
+    generated INTEGER
+);
+CREATE TABLE IF NOT EXISTS general.user_roles (
+    uniq_id SERIAL PRIMARY KEY,
+    role_id INTEGER REFERENCES general.role_master(role_id),
+    userid INTEGER REFERENCES general.account_profile(userid),
+    generated INTEGER
+);
+CREATE TRIGGER set_generated_trigger_role_master BEFORE INSERT ON general.role_master FOR EACH ROW EXECUTE FUNCTION set_generated_column();
+CREATE TRIGGER set_generated_trigger_account_profile BEFORE INSERT ON general.account_profile FOR EACH ROW EXECUTE FUNCTION set_generated_column();

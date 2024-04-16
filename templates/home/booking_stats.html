@@ -8,15 +8,35 @@
 <h1 class="text-center" style="color: #0d225c; margin-bottom: 35px;">Booking Stats</h1>
 <form class="" action="" method="GET">
     <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <lable>From Date</lable>
-              <input name="from_date" id="from_date" type="date" class="form-control" onkeydown="return true" value="{{from_date}}" required>
+              <input name="from_date" id="from_date" type="date" class="form-control" onkeydown="return true" value="{{from_date}}">
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
               <lable>To Date</lable>
-              <input name="to_date" id="to_date" type="date" class="form-control" onkeydown="return true" value="{{to_date}}" required>
+              <input name="to_date" id="to_date" type="date" class="form-control" onkeydown="return true" value="{{to_date}}">
             </div>
-            <div class="col-sm-3"><br>
+            {% if is_admin %}
+            <div class="col-sm-2">
+              <lable>Username</lable><br>
+              <select class="select2" name="userid">
+                  <option value=""> --Select-- </option>
+                    {% for user in users %}
+                      <option value="{{ user.userid }}" {% if user.userid == userid %}selected{%else%}''{% endif %}>{{ user.full_name }} [{{ user.userid }}]</option>
+                    {% endfor %}
+              </select>
+            </div>
+            {%endif%}
+            <div class="col-sm-2">
+              <lable>Status</lable><br>
+              <select class="select2" name="status">
+                  <option value=""> --Select-- </option>
+                    {% for st in status_data %}
+                      <option value="{{st}}" {% if status == st %}selected{%else%}''{% endif %}>{{st}}</option>
+                    {% endfor %}
+              </select>
+            </div>
+            <div class="col-sm-1"><br>
                 <input  type="submit" value="Search" class="btn btn-primary">
             </div>
     </div>
@@ -35,7 +55,10 @@
           <th>Event Date</th>
           <th>Message</th>
           <th>Status</th>
-          <th>Confirmed</th>
+          <th>Generated</th>
+          <th>Updated on</th>
+          <th>Updated by</th>
+          {% if is_admin %}<th>Action</th>{%endif%}
         </tr>
     </thead>
     <tbody>
@@ -49,8 +72,13 @@
         <td>{{obj.mobile}}</td>
         <td>{{obj.event_date|timestamp}}</td>
         <td>{{obj.message}}</td>
-        <td class="{{obj.status.status}}">{{obj.status.status}}</td>
-        <td>{{obj.is_confirmed}}</td>
+        <td class="{{obj.status.status}} booking-status">{{obj.status.status}}</td>
+        <td>{{obj.generated|epoch_timestamp}}</td>
+        <td>{{obj.updated_on|epoch_timestamp}}</td>
+        <td>{{obj.updated_by|default:""}}</td>
+        {% if is_admin %}
+        <td><a href="/update_booking_request/{{obj.id}}/" class="btn btn-outline-primary">Update</a></td>
+        {%endif%}
       </tr>
       {% endfor %}
     </tbody>
@@ -58,3 +86,8 @@
 </div>
 
 {% endblock body %}
+{% block js %}
+<script type="text/javascript">
+  $('.select2').select2();
+</script>
+{% endblock js %}

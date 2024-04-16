@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
-from account.authenticate import login_required
+from account.authenticate import login_required,admin_login_required
 from django.http import HttpResponse
 from ps_webapp.models import EventStatus, EventType, EventBookingMaster, AccountProfile
 from datetime import datetime,timedelta
 from django.utils import timezone
 from django.contrib import messages
+from ps_webapp.models import UserRoles
 
 # Create your views here.
 @login_required
@@ -19,7 +20,6 @@ def index(request):
 def booknow(request):
     context = dict()
     if request.method=='POST':
-        print(request.POST)
         city_id = request.POST.get("city_id",None)
         area_address = request.POST.get("area_address",None)
         mobile = request.POST.get("mobile",None)
@@ -43,29 +43,73 @@ def about(request):
     context = dict()
     return render(request, 'home/about.html',context)
 
+
 @login_required
 def photoshoot(request):
     context = dict()
     return render(request, 'home/photoshoot.html',context)
+
 
 @login_required
 def gallery(request):
     context = dict()
     return render(request, 'home/gallery.html',context)
 
+
 @login_required
 def booking_stats(request):
     context,filter_clause = dict(),dict()
-    userid = request.session['userid']
-    from_date = request.GET.get("from_date","")
-    to_date = request.GET.get("to_date","")
+    userid = request.GET.get("userid","")
+    status = request.GET.get("status","")
+    from_date_str = request.GET.get("from_date","")
+    to_date_str = request.GET.get("to_date","")
+    loggedin_userid = request.session['userid']
 
-    filter_clause["user_id"]=userid
-    if from_date and to_date:
-        context.update({"from_date":from_date,"to_date":to_date})
-        from_date = datetime.strptime(from_date, '%Y-%m-%d')
-        to_date = datetime.strptime(to_date, '%Y-%m-%d') + timedelta(days=1) - timedelta(seconds=1)
+    is_admin = UserRoles.objects.filter(userid=loggedin_userid,role__role_name='Admin').exists()
+    if is_admin and userid:
+        filter_clause["user_id"] = request.GET.get('userid')
+
+    if not is_admin:
+        filter_clause = {'user_id':loggedin_userid }
+
+    if from_date_str and to_date_str:
+        from_date = datetime.strptime(from_date_str,'%Y-%m-%d')
+        to_date = datetime.strptime(to_date_str,'%Y-%m-%d')+timedelta(days=1)-timedelta(seconds=1)
         filter_clause.update({"event_date__range":(from_date, to_date)})
 
-    context["booking_stats"] = EventBookingMaster.objects.filter(**filter_clause)
+    if status:
+        filter_clause["status__status"]=status
+
+    booking_stats = EventBookingMaster.objects.filter(**filter_clause)
+    users = AccountProfile.objects.all()
+    status_data = EventStatus.objects.values_list('status', flat=True)
+
+    context.update({
+        "booking_stats":booking_stats,
+        "users":users,
+        "status_data":status_data,
+        "is_admin":is_admin,
+        "from_date":from_date_str,
+        "to_date":to_date_str,
+        "userid":int(userid) if userid else '',
+        "status":status,
+    })
     return render(request, 'home/booking_stats.html',context)
+
+
+@admin_login_required
+def update_booking_request(request, id):
+    if request.method == "POST":
+        booking_status = request.POST.get("booking_status","")
+        id = request.POST.get("id","")
+        obj = EventBookingMaster.objects.get(id=id)
+        obj.status_id=booking_status
+        obj.updated_by_id=request.session["userid"]
+        obj.save()
+        return redirect('/booking_stats')
+
+    context = {
+        "status_data":EventStatus.objects.values_list('status',flat=True),
+        "booking_data":EventBookingMaster.objects.get(id=id),
+    }
+    return render(request, 'home/update_booking_request.html', context)

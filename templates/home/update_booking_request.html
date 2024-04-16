@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Booking Stats{% endblock title %}
+{% block body %}
+{% load custom_filter %}
+{% include 'navbar.html' %}
+
+<link rel="stylesheet" href="{% static 'css/booking_stats.css' %}" />
+<h1 class="text-center" style="color: #0d225c; margin-bottom: 35px;">Booking Stats</h1>
+<form class="" action="" method="POST">
+  {%csrf_token%}
+  <table class="table table-responsive">
+    <thead>
+      <th>City</th>
+      <th>Event</th>
+      <th>User</th>
+      <th>Area address</th>
+      <th>Mobile</th>
+      <th>Event date</th>
+      <th>Message</th>
+      <th>Status</th>
+      <th>Updated by</th>
+      <th>Generated</th>
+      <th>Updated</th>
+    </thead>
+  <tbody>
+    <tr>
+      <td>{{booking_data.city_id|city_name}}</td>
+      <td>{{booking_data.event.event_name}}</td>
+      <td>{{booking_data.user}}</td>
+      <td>{{booking_data.area_address}}</td>
+      <td>{{booking_data.mobile}}</td>
+      <td>{{booking_data.event_date|timestamp}}</td>
+      <td>{{booking_data.message}}</td>
+      <td>
+        <select class="status" name="booking_status" id="status">
+          <option value="">Select Status</option>
+          {% for status in status_data %}
+          <option value="{{status}}" {% if status == booking_data.status.status %}selected{%endif%}>{{status}}</option>
+          {% endfor %}
+        </select>
+      </td>
+      <td>{{booking_data.updated_by|default:""}}</td>
+      <td>{{booking_data.generated|epoch_timestamp}}</td>
+      <td>{{booking_data.updated_on|epoch_timestamp}}</td>
+    </tr>
+  </tbody>
+</table>
+  <input type="hidden" name="id" value="{{booking_data.id}}">
+  <div class="">
+    <input type="submit" value="Update" class="btn btn-primary">
+  </div>
+</form>
+<br>
+<div class="table-responsive">
+
+</div>
+
+{% endblock body %}
+{% block js %}
+<script type="text/javascript">
+  $('#status').select2();
+</script>
+{% endblock js %}

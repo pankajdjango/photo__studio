@@ -3,7 +3,8 @@ from django.db import models
 import datetime
 class UrlHistory(models.Model):
     userid = models.ForeignKey('AccountProfile', models.DO_NOTHING, db_column='userid')
-    url_visited = models.CharField(max_length=100, blank=True, null=True)
+    # url_visited = models.CharField(max_length=100, blank=True, null=True)
+    url_visited = models.TextField(blank=True, null=True)
     generated = models.IntegerField(null=True,blank=True)
 
     class Meta:

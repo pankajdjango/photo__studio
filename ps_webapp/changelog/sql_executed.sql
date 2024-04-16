@@ -58,6 +58,7 @@ userid BIGINT NOT NULL REFERENCES general.account_profile(userid) DEFERRABLE INI
 url_visited varchar(100),
 generated integer
 );
+ALTER TABLE general.url_history ALTER COLUMN url_visited TYPE TEXT;
 
 CREATE TRIGGER set_generated_trigger_url_history BEFORE INSERT ON general.url_history FOR EACH ROW EXECUTE FUNCTION set_generated_column();
 
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS general.event_status (
     status VARCHAR(50) primary key
 );
 
-INSERT INTO general.event_status (status) values ('Pending'),('Confirm'),('Rejected'),('Cancel')
+
 
 
 
@@ -106,3 +107,24 @@ CREATE TABLE IF NOT EXISTS general.event_booking_master (
 CREATE TRIGGER set_generated_trigger_event_booking_request BEFORE INSERT ON general.event_booking_master FOR EACH ROW EXECUTE FUNCTION set_generated_column();
 CREATE TRIGGER set_last_updated_trigger_event_booking_request BEFORE UPDATE ON general.event_booking_master FOR EACH ROW EXECUTE FUNCTION set_updated_on_column();
 ALTER SEQUENCE event_booking_master_id_seq RESTART WITH 1;
+
+
+ALTER TABLE general.event_booking_master ADD COLUMN updated_by INTEGER REFERENCES general.account_profile(userid) NULL;
+alter table general.event_booking_master drop column is_confirmed;
+
+
+
+CREATE TABLE IF NOT EXISTS general.role_master (
+    role_id SERIAL PRIMARY KEY,
+    role_name VARCHAR(50),
+    generated INTEGER
+);
+CREATE TABLE IF NOT EXISTS general.user_roles (
+    uniq_id SERIAL PRIMARY KEY,
+    role_id INTEGER REFERENCES general.role_master(role_id),
+    userid INTEGER REFERENCES general.account_profile(userid),
+    generated INTEGER
+);
+--DROP TRIGGER IF EXISTS set_generated_trigger_account_profile ON general.account_profile;
+CREATE TRIGGER set_generated_trigger_role_master BEFORE INSERT ON general.role_master FOR EACH ROW EXECUTE FUNCTION set_generated_column();
+CREATE TRIGGER set_generated_trigger_account_profile BEFORE INSERT ON general.user_roles FOR EACH ROW EXECUTE FUNCTION set_generated_column();

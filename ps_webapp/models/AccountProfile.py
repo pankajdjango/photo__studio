@@ -1,4 +1,5 @@
 from django.db import models
+from ps_webapp.models import CityMaster
 
 
 class AccountProfile(models.Model):

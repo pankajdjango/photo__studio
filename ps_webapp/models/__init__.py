@@ -21,3 +21,5 @@ from .UrlHistory            import UrlHistory
 from .EventStatus            import EventStatus
 from .EventType            import EventType
 from .EventBookingMaster            import EventBookingMaster
+from .RoleMaster            import RoleMaster
+from .UserRoles            import UserRoles
