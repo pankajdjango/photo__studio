@@ -1,0 +1,33 @@
+                         |__/                                   
+root@Dev-Server:/home/django-server/photo__studio# tail -f /var/log/apache2/error.log
+root@Dev-Server:/home/django-server/photo__studio# tail -f /var/log/apache2/error.log
+[Thu Jul 25 16:58:12.365436 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:29344] 
+[Thu Jul 25 16:58:12.365444 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:29344] 
+[Thu Jul 25 16:59:12.340795 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674] 
+[Thu Jul 25 16:59:12.340834 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674] 
+[Thu Jul 25 16:59:12.340839 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674] 
+[Thu Jul 25 16:59:12.340843 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674] request --------------------------- 
+[Thu Jul 25 16:59:12.340849 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674]  <QueryDict: {'request_data[test]': ['test123'], 'action': ['EventScheduler'], 'environment': ['2'], 'environment_text': ['s9']}>
+[Thu Jul 25 16:59:12.340863 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674] 
+[Thu Jul 25 16:59:12.340866 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674] 
+[Thu Jul 25 16:59:12.340874 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:56674] 
+[Thu Jul 25 17:00:12.327454 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076] 
+[Thu Jul 25 17:00:12.327566 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076] 
+[Thu Jul 25 17:00:12.327574 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076] 
+[Thu Jul 25 17:00:12.327580 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076] request --------------------------- 
+[Thu Jul 25 17:00:12.327587 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076]  <QueryDict: {'request_data[test]': ['test123'], 'action': ['EventScheduler'], 'environment': ['2'], 'environment_text': ['s9']}>
+[Thu Jul 25 17:00:12.327593 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076] 
+[Thu Jul 25 17:00:12.327599 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076] 
+[Thu Jul 25 17:00:12.327609 2024] [wsgi:error] [pid 3942294:tid 140442494301760] [remote 3.108.204.107:42076] 
+
+[Thu Jul 25 17:01:12.358901 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819] 
+[Thu Jul 25 17:01:12.358982 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819] 
+[Thu Jul 25 17:01:12.358987 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819] 
+[Thu Jul 25 17:01:12.358991 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819] request --------------------------- 
+[Thu Jul 25 17:01:12.358997 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819]  <QueryDict: {'request_data[test]': ['test123'], 'action': ['EventScheduler'], 'environment': ['2'], 'environment_text': ['s9']}>
+[Thu Jul 25 17:01:12.359001 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819] 
+[Thu Jul 25 17:01:12.359006 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819] 
+[Thu Jul 25 17:01:12.359014 2024] [wsgi:error] [pid 3942294:tid 140442460730944] [remote 3.108.204.107:39819] 
+
+
+

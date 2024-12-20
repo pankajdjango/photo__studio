@@ -23,3 +23,4 @@ from .EventType            import EventType
 from .EventBookingMaster            import EventBookingMaster
 from .RoleMaster            import RoleMaster
 from .UserRoles            import UserRoles
+from .RequestLog            import RequestLog

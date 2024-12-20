@@ -113,3 +113,18 @@ def update_booking_request(request, id):
         "booking_data":EventBookingMaster.objects.get(id=id),
     }
     return render(request, 'home/update_booking_request.html', context)
+from django.views.decorators.csrf import csrf_exempt
+import json
+@csrf_exempt
+def eventScheduler(request):
+    #print(f"\n\n\nrequest --------------------------- \n {json.loads(json.dumps(request.POST).get('request_data[data]'))}\n\n\n")
+    data =  json.loads(request.POST["request_data[data]"])
+    for d in data:
+        print(d)
+    return HttpResponse(request)
+
+
+def biodata(request):
+    return render(request, 'home/biodata.html')
+def amt(request):
+    return render(request, 'home/amt.html')

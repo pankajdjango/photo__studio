@@ -12,20 +12,22 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os,sys
-
-is_production = 1 if '/var/run/apache2' in f"{os.environ.get('APACHE_RUN_DIR')}" else 0
-
-if bool(is_production):
-    # Build paths inside the project like this: BASE_DIR / 'subdir'.
-    BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-    ALLOWED_HOSTS = ["5.181.217.57","pankajtrsrewa.com","https://www.pankajtrsrewa.com/","www.pankajtrsrewa.com"]
-else :
-    BASE_DIR = Path(__file__).resolve().parent
-    sys.path.append('/home/pankaj/study/cicd/config')
-    ALLOWED_HOSTS = ['localhost','127.0.0.1']
-
+#
+#is_production = 1 if '/var/run/apache2' in f"{os.environ.get('APACHE_RUN_DIR')}" else 0
+#
+#if bool(is_production):
+#    # Build paths inside the project like this: BASE_DIR / 'subdir'.
+#    BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+#    ALLOWED_HOSTS = ["5.181.217.57","pkrm.in","https://www.pkrm.in/","www.pkrm.in","5.181.217.57:5050"]
+#else :
+#    BASE_DIR = Path(__file__).resolve().parent
+#    sys.path.append('/home/pankaj/study/cicd/config')
+#    ALLOWED_HOSTS = ['localhost','127.0.0.1']
+#
+#ALLOWED_HOSTS = ["5.181.217.57","pkrm.in","https://www.pkrm.in/","www.pkrm.in","5.181.217.57:5050"]
+ALLOWED_HOSTS =["*"]  # ["5.181.217.57","pkrm.in","https://www.pkrm.in/","www.pkrm.in","5.181.217.57:5050"]
 # Set DEBUG mode based on the environment
-DEBUG = not is_production
+DEBUG = True#not is_production
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -57,6 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'account.middleware.Custom404Middleware',
     'account.middleware.URLHistoryMiddleware',
+    'middleware.log.LogRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'PK_Photo_Studio.urls'
@@ -85,6 +88,7 @@ WSGI_APPLICATION = 'PK_Photo_Studio.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 import psycopg2.extensions
+is_production=True
 if not is_production:
     DATABASES = {
         'default': {
@@ -153,3 +157,11 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR,]
 TIME_ZONE = 'Asia/Kolkata'
+
+
+# Email
+from config import EMAIL_HOST_USER,EMAIL_HOST_PASSWORD
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587

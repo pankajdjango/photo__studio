@@ -89,3 +89,25 @@ CREATE TABLE IF NOT EXISTS general.user_roles (
 );
 CREATE TRIGGER set_generated_trigger_role_master BEFORE INSERT ON general.role_master FOR EACH ROW EXECUTE FUNCTION set_generated_column();
 CREATE TRIGGER set_generated_trigger_account_profile BEFORE INSERT ON general.account_profile FOR EACH ROW EXECUTE FUNCTION set_generated_column();
+
+
+
+
+
+--request log
+CREATE TABLE general.request_log (
+    id SERIAL PRIMARY KEY,
+    ip_address INET NOT NULL,
+    user_agent TEXT,
+    path TEXT NOT NULL,
+    method VARCHAR(10) NOT NULL,
+    timestamp TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    vendor VARCHAR(255),
+    os_system VARCHAR(255),
+    location VARCHAR(255),
+    latitude FLOAT,
+    longitude FLOAT,
+    generated intenger
+);
+ALTER TABLE general.request_log ADD COLUMN additional_info JSONB;
+CREATE TRIGGER set_generated_trigger_request_log BEFORE INSERT ON general.request_log FOR EACH ROW EXECUTE FUNCTION set_generated_column();
